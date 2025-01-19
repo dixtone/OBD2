@@ -222,13 +222,23 @@ float OBD2::getValue(OBD2Request* request){
 
     int n = request->ExpectedBytes-1;
 
-    float v =  (float)
-       ( n>=0?(_responseBytes[0]<<(8*n)):0 
-       + n>=0?(_responseBytes[1]<<(8*(n-1))):0
-       + n>=0?(_responseBytes[2]<<(8*(n-2))):0
-       + n>=0?(_responseBytes[3]<<(8*(n-3))):0
-       );
-     return v>0.00?(v*request->ScaleFactor + request->AdjustFactor):0.00;
+    /*float v =  (float)
+    ( n>=0?(_responseBytes[0]<<(8*n)):0 
+       | (n-1)>=0?(_responseBytes[1]<<(8*(n-1))):0
+       | (n-2)>=0?(_responseBytes[2]<<(8*(n-2))):0
+       | (n-3)>=0?(_responseBytes[3]<<(8*(n-3))):0
+    );*/
+
+    float v = 0.00;
+    uint8_t bitShift;
+
+    for (uint8_t i = 0; i < request->ExpectedBytes; i++)
+    {
+        bitShift = 8 * (request->ExpectedBytes - i - 1);
+        v = v + ((_responseBytes[i]) << bitShift);
+    }
+
+    return v>0.00?(v*request->ScaleFactor + request->AdjustFactor):0.00; 
 }
 
 uint8_t* OBD2::getResponseBytes(){
