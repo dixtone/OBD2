@@ -320,6 +320,7 @@ void setup()
   //initialize bluetooth connection over mac address
   uint8_t address[6] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00}; //replace with yours
 
+  BluetoothConnector.begin("TESTConnectorBluetooth", true);
   bool connectionResult = BluetoothConnector.connect(address);
 
   if(connectionResult)
