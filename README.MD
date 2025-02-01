@@ -1,5 +1,6 @@
 # OBD2
 Library for ESP32 to read and write canbus packets over OBD2 connector directly or throught Elm327 bluetooth dongle.
+***See it in action here: https://github.com/dixtone/GiuliaAndStelvioDPFMonitor***
 
 ## 1. Using direct connection
 If you want to read/write directly over CAN-H and CAN-L, you need to use a canbus transceiver like **SN65HVD230** 
