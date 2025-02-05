@@ -107,7 +107,7 @@ void handleOBD2(void * parameter){
             Serial.printf("\n>> Broadcast packet from ECU %04x : %02x %02x %02x %02x %02x %02x %02x %02x\n", bp.Header, bp.Byte0, bp.Byte1, bp.Byte2, bp.Byte3, bp.Byte4, bp.Byte5, bp.Byte6, bp.Byte7);
 
             //calculate oil pressure
-            oilPressure = (float)( (( ((bp.Byte0<<(8))| bp.Byte1) & 0b0000000111111110) >> 1)/10.0 );
+            oilPressure = (float)((p->Byte0 & 0b00000001) << 7 | ((p->Byte1 >> 1) & 0b01111111))/10.0;
          }         
       }
 
